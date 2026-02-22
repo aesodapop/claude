@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -155,8 +156,92 @@
   .pill button { background: none; border: none; color: inherit; cursor: pointer; font-size: 15px; opacity: 0.55; line-height: 1; }
   .pill button:hover { opacity: 1; }
 
+  /* ── Data source info panel ── */
+  .source-panel {
+    display: none; margin-top: 28px;
+    border: 1px solid var(--border); background: var(--panel);
+  }
+  .source-panel.on { display: block; }
+
+  .source-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 18px; border-bottom: 1px solid var(--border);
+    cursor: pointer; user-select: none;
+  }
+  .source-header:hover { background: rgba(255,255,255,0.02); }
+
+  .source-title {
+    font-family: 'Space Mono', monospace; font-size: 9px;
+    letter-spacing: 3px; text-transform: uppercase; color: var(--muted);
+  }
+
+  .source-toggle {
+    font-family: 'Space Mono', monospace; font-size: 9px;
+    color: var(--muted); transition: transform 0.2s;
+  }
+  .source-toggle.open { transform: rotate(180deg); }
+
+  .source-body { padding: 18px; display: none; }
+  .source-body.open { display: block; }
+
+  .source-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px; background: var(--border); margin-bottom: 18px;
+  }
+
+  .source-stat {
+    background: var(--card); padding: 14px 16px;
+  }
+  .source-stat-lbl {
+    font-family: 'Space Mono', monospace; font-size: 8px;
+    color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 5px;
+  }
+  .source-stat-val {
+    font-size: 20px; font-weight: 800; letter-spacing: -0.5px;
+  }
+  .source-stat-sub {
+    font-family: 'Space Mono', monospace; font-size: 9px;
+    color: var(--muted); margin-top: 3px;
+  }
+
+  .source-breakdown {
+    display: flex; gap: 0; border: 1px solid var(--border); overflow: hidden; margin-bottom: 16px;
+  }
+  .source-seg {
+    height: 6px; transition: width 0.6s ease;
+  }
+
+  .source-legend {
+    display: flex; gap: 20px; flex-wrap: wrap;
+    font-family: 'Space Mono', monospace; font-size: 9px; color: var(--muted);
+  }
+  .source-legend-item { display: flex; align-items: center; gap: 6px; }
+  .source-legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  .source-routes {
+    margin-top: 16px; border-top: 1px solid var(--border); padding-top: 16px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .route-row {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Space Mono', monospace; font-size: 9px;
+  }
+  .route-icon { font-size: 13px; width: 20px; text-align: center; flex-shrink: 0; }
+  .route-label { color: var(--muted); flex: 1; }
+  .route-count {
+    padding: 2px 8px; font-size: 9px; font-weight: 700;
+    font-family: 'Space Mono', monospace;
+  }
+  .route-count.live-direct { background: rgba(0,255,136,0.12); color: var(--accent); border: 1px solid rgba(0,255,136,0.3); }
+  .route-count.live-proxy  { background: rgba(0,196,255,0.12); color: var(--accent2); border: 1px solid rgba(0,196,255,0.3); }
+  .route-count.simulated   { background: rgba(255,204,0,0.12); color: var(--yellow); border: 1px solid rgba(255,204,0,0.3); }
+  .route-count.failed      { background: rgba(255,68,102,0.12); color: var(--red); border: 1px solid rgba(255,68,102,0.3); }
+
+  .route-bar-track { width: 80px; height: 3px; background: var(--border); flex-shrink: 0; }
+  .route-bar-fill  { height: 100%; transition: width 0.5s ease; }
+
   .footnote {
-    margin-top: 44px; padding: 14px 18px; border-left: 2px solid var(--accent);
+    margin-top: 28px; padding: 14px 18px; border-left: 2px solid var(--accent);
     background: rgba(0,255,136,0.02); font-family: 'Space Mono', monospace;
     font-size: 9px; color: var(--muted); line-height: 1.9;
   }
@@ -231,9 +316,91 @@
     </div>
   </div>
 
+  <!-- Data Source Info Panel -->
+  <div class="source-panel" id="sourcePanel">
+    <div class="source-header" onclick="toggleSourceBody()">
+      <span class="source-title">⬡ Data Source Details</span>
+      <span class="source-toggle" id="sourceToggle">▼</span>
+    </div>
+    <div class="source-body" id="sourceBody">
+      <div class="source-grid">
+        <div class="source-stat">
+          <div class="source-stat-lbl">Tickers Scanned</div>
+          <div class="source-stat-val" id="si-total">—</div>
+          <div class="source-stat-sub">NYSE + NASDAQ universe</div>
+        </div>
+        <div class="source-stat">
+          <div class="source-stat-lbl">Live Prices Fetched</div>
+          <div class="source-stat-val g" id="si-live">—</div>
+          <div class="source-stat-sub" id="si-live-sub">—</div>
+        </div>
+        <div class="source-stat">
+          <div class="source-stat-lbl">Simulated Fallback</div>
+          <div class="source-stat-val" style="color:var(--yellow)" id="si-sim">—</div>
+          <div class="source-stat-sub" id="si-sim-sub">—</div>
+        </div>
+        <div class="source-stat">
+          <div class="source-stat-lbl">Failed / Skipped</div>
+          <div class="source-stat-val r" id="si-failed">—</div>
+          <div class="source-stat-sub">No data returned</div>
+        </div>
+        <div class="source-stat">
+          <div class="source-stat-lbl">Data As Of</div>
+          <div class="source-stat-val" style="font-size:14px" id="si-asof">—</div>
+          <div class="source-stat-sub">Last market close</div>
+        </div>
+        <div class="source-stat">
+          <div class="source-stat-lbl">Matches Found</div>
+          <div class="source-stat-val g" id="si-matches">—</div>
+          <div class="source-stat-sub">Passed all filters</div>
+        </div>
+      </div>
+
+      <div class="source-breakdown" id="sourceBar">
+        <div class="source-seg" id="seg-direct" style="background:var(--accent);width:0%"></div>
+        <div class="source-seg" id="seg-proxy"  style="background:var(--accent2);width:0%"></div>
+        <div class="source-seg" id="seg-sim"    style="background:var(--yellow);width:0%"></div>
+        <div class="source-seg" id="seg-failed" style="background:#333;width:0%"></div>
+      </div>
+
+      <div class="source-legend">
+        <div class="source-legend-item"><div class="source-legend-dot" style="background:var(--accent)"></div>Yahoo Finance (direct)</div>
+        <div class="source-legend-item"><div class="source-legend-dot" style="background:var(--accent2)"></div>Yahoo Finance (via proxy)</div>
+        <div class="source-legend-item"><div class="source-legend-dot" style="background:var(--yellow)"></div>Simulated data</div>
+        <div class="source-legend-item"><div class="source-legend-dot" style="background:#444"></div>Failed / no data</div>
+      </div>
+
+      <div class="source-routes">
+        <div class="route-row">
+          <span class="route-icon">🟢</span>
+          <span class="route-label">Yahoo Finance — direct <span style="opacity:0.5">(query1.finance.yahoo.com)</span></span>
+          <div class="route-bar-track"><div class="route-bar-fill" id="bar-direct" style="background:var(--accent);width:0%"></div></div>
+          <span class="route-count live-direct" id="rc-direct">0</span>
+        </div>
+        <div class="route-row">
+          <span class="route-icon">🔵</span>
+          <span class="route-label">Yahoo Finance — via corsproxy.io <span style="opacity:0.5">(CORS bypass)</span></span>
+          <div class="route-bar-track"><div class="route-bar-fill" id="bar-proxy" style="background:var(--accent2);width:0%"></div></div>
+          <span class="route-count live-proxy" id="rc-proxy">0</span>
+        </div>
+        <div class="route-row">
+          <span class="route-icon">🟡</span>
+          <span class="route-label">Simulated — pattern-generated fallback <span style="opacity:0.5">(no network)</span></span>
+          <div class="route-bar-track"><div class="route-bar-fill" id="bar-sim" style="background:var(--yellow);width:0%"></div></div>
+          <span class="route-count simulated" id="rc-sim">0</span>
+        </div>
+        <div class="route-row">
+          <span class="route-icon">🔴</span>
+          <span class="route-label">Failed — ticker returned no usable data</span>
+          <div class="route-bar-track"><div class="route-bar-fill" id="bar-failed" style="background:var(--red);width:0%"></div></div>
+          <span class="route-count failed" id="rc-failed">0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="footnote">
-    <strong>HOW IT WORKS:</strong> Scans ~200 NYSE/NASDAQ tickers via Yahoo Finance. Scores each on: total 4-month gain from trough → peak, trend smoothness (R² of linear regression), healthy 5–25% pullback from peak (consolidation setup), and volume expansion. Higher score = closer match to a steady multi-month breakout.<br><br>
-    <strong>DATA SOURCE:</strong> Live prices from Yahoo Finance public API. A CORS proxy (<a href="https://corsproxy.io" target="_blank">corsproxy.io</a>) is used to bypass browser restrictions. If blocked, falls back to simulated data so the UI always works.<br><br>
+    <strong>HOW IT WORKS:</strong> Scans ~200 NYSE/NASDAQ tickers. Scores each on: total 4-month gain from trough → peak, trend smoothness (R² of linear regression), healthy 5–25% pullback from peak (consolidation setup), and volume expansion. Higher score = closer match to a steady multi-month breakout.<br><br>
     <strong>DISCLAIMER:</strong> Not financial advice. Technical screening only. Always do your own research.
   </div>
 </div>
@@ -246,7 +413,11 @@ let allStocks   = [];
 let activeTab   = 'all';
 let researchSet = new Set();
 let trashSet    = new Set();
-let usingLive   = false;   // true = real Yahoo data, false = simulated
+let usingLive   = false;
+
+// Per-scan data source tracking
+let routeCounts = { direct: 0, proxy: 0, sim: 0, failed: 0 };
+let scanAsOf    = null;
 
 // ═══════════════════════════════════════════════════
 // TICKER UNIVERSE  (~200 liquid NYSE/NASDAQ names)
@@ -293,13 +464,17 @@ const PROXY = 'https://corsproxy.io/?';
 
 async function fetchYahoo(ticker) {
   const end   = Math.floor(Date.now() / 1000);
-  const start = end - 150 * 86400;   // ~5 months back
+  const start = end - 150 * 86400;
   const url   = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d&period1=${start}&period2=${end}`;
 
-  // Try direct first (works on some deployments), then proxy
-  for (const attempt of [url, PROXY + encodeURIComponent(url)]) {
+  const attempts = [
+    { u: url,                                   route: 'direct' },
+    { u: PROXY + encodeURIComponent(url),       route: 'proxy'  },
+  ];
+
+  for (const { u, route } of attempts) {
     try {
-      const res = await fetch(attempt, { signal: AbortSignal.timeout(8000) });
+      const res = await fetch(u, { signal: AbortSignal.timeout(8000) });
       if (!res.ok) continue;
       const json = await res.json();
       const result = json?.chart?.result?.[0];
@@ -309,12 +484,17 @@ async function fetchYahoo(ticker) {
       const rawVolumes = result.indicators?.quote?.[0]?.volume ?? [];
       const meta       = result.meta ?? {};
 
-      // Filter out null/NaN values
       const valid = rawCloses
         .map((c, i) => ({ c, v: rawVolumes[i] || 0 }))
         .filter(x => x.c != null && isFinite(x.c) && x.c > 0);
 
       if (valid.length < 55) continue;
+
+      // Track which route worked and data timestamp
+      routeCounts[route]++;
+      if (!scanAsOf && meta.regularMarketTime) {
+        scanAsOf = new Date(meta.regularMarketTime * 1000);
+      }
 
       return {
         ticker,
@@ -322,6 +502,7 @@ async function fetchYahoo(ticker) {
         currentPrice: meta.regularMarketPrice || valid[valid.length - 1].c,
         prices:  valid.map(x => x.c),
         volumes: valid.map(x => x.v),
+        route,
         live: true,
       };
     } catch (_) { /* try next */ }
@@ -407,6 +588,7 @@ function simulatePrices(ticker) {
     currentPrice: prices[prices.length - 1],
     prices,
     volumes,
+    route: 'sim',
     live: false,
   };
 }
@@ -494,6 +676,8 @@ async function runScan() {
   allStocks = [];
   researchSet.clear();
   trashSet.clear();
+  routeCounts = { direct: 0, proxy: 0, sim: 0, failed: 0 };
+  scanAsOf    = null;
   updateBadges();
 
   setStatus('run', 'Testing connection to Yahoo Finance…');
@@ -527,11 +711,25 @@ async function runScan() {
 
     await Promise.allSettled(batch.map(async ticker => {
       try {
-        const raw    = usingLive ? await fetchYahoo(ticker) : simulatePrices(ticker);
-        if (!raw) return;
+        let raw;
+        if (usingLive) {
+          raw = await fetchYahoo(ticker);
+          if (!raw) {
+            // Live fetch failed — fall back to sim if available
+            raw = simulatePrices(ticker);
+            raw.route = 'sim';
+            routeCounts.sim++;
+          }
+        } else {
+          raw = simulatePrices(ticker);
+          raw.route = 'sim';
+          routeCounts.sim++;
+        }
         const scored = scoreStock(raw, opts);
         if (scored) results.push({ ...raw, ...scored });
-      } catch (_) {}
+      } catch (_) {
+        routeCounts.failed++;
+      }
     }));
 
     if (DELAY > 50) await sleep(DELAY);
@@ -552,6 +750,7 @@ async function runScan() {
   btn.disabled = false;
   btn.textContent = '▶ Re-Scan';
   updateBadges();
+  updateSourcePanel();
   renderGrid();
 }
 
@@ -625,9 +824,13 @@ function cardHTML(s, idx) {
   const peakRun  = ((s.peakPrice - s.troughPrice) / s.troughPrice * 100).toFixed(0);
   const pullPct  = (s.pullback * 100).toFixed(1);
   const r2pct    = (s.r2 * 100).toFixed(0);
-  const liveTag  = s.live
-    ? `<span style="font-size:8px;font-family:monospace;color:var(--accent);margin-left:6px;opacity:0.7">LIVE</span>`
-    : `<span style="font-size:8px;font-family:monospace;color:var(--yellow);margin-left:6px;opacity:0.7">SIM</span>`;
+  const routeLabels = {
+    direct: ['LIVE·DIRECT', 'var(--accent)'],
+    proxy:  ['LIVE·PROXY',  'var(--accent2)'],
+    sim:    ['SIMULATED',   'var(--yellow)'],
+  };
+  const [routeText, routeColor] = routeLabels[s.route] || ['UNKNOWN', 'var(--muted)'];
+  const liveTag = `<span style="font-size:8px;font-family:monospace;color:${routeColor};margin-left:6px;opacity:0.75;letter-spacing:1px">${routeText}</span>`;
 
   return `<div class="card${isStar?' star':''}${isDead?' dead':''}" id="c-${s.ticker}" style="animation-delay:${idx*0.03}s">
     <div class="card-top">
@@ -700,6 +903,65 @@ function renderResearchPanel() {
 function setStatus(state, msg) {
   document.getElementById('dot').className = 'dot ' + state;
   document.getElementById('statusMsg').innerHTML = msg;
+}
+
+// ═══════════════════════════════════════════════════
+// DATA SOURCE PANEL
+// ═══════════════════════════════════════════════════
+function updateSourcePanel() {
+  const panel = document.getElementById('sourcePanel');
+  panel.classList.add('on');
+  // Auto-open after first scan
+  document.getElementById('sourceBody').classList.add('open');
+  document.getElementById('sourceToggle').classList.add('open');
+
+  const total = TICKER_LIST.length;
+  const live  = routeCounts.direct + routeCounts.proxy;
+  const sim   = routeCounts.sim;
+  const fail  = routeCounts.failed;
+
+  // Stats
+  document.getElementById('si-total').textContent   = total;
+  document.getElementById('si-live').textContent     = live;
+  document.getElementById('si-sim').textContent      = sim;
+  document.getElementById('si-failed').textContent   = fail;
+  document.getElementById('si-matches').textContent  = allStocks.length;
+
+  document.getElementById('si-live-sub').textContent =
+    live > 0
+      ? `${routeCounts.direct} direct · ${routeCounts.proxy} via proxy`
+      : 'None — Yahoo Finance blocked';
+  document.getElementById('si-sim-sub').textContent =
+    sim > 0 ? 'Pattern-generated prices' : 'None needed';
+
+  // As-of date
+  const asof = scanAsOf || new Date();
+  document.getElementById('si-asof').textContent =
+    asof.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+  // Breakdown bar
+  const pct = v => (total > 0 ? (v / total * 100).toFixed(1) : 0) + '%';
+  document.getElementById('seg-direct').style.width = pct(routeCounts.direct);
+  document.getElementById('seg-proxy').style.width  = pct(routeCounts.proxy);
+  document.getElementById('seg-sim').style.width    = pct(sim);
+  document.getElementById('seg-failed').style.width = pct(fail);
+
+  // Route rows
+  const setRoute = (id, count) => {
+    document.getElementById('rc-' + id).textContent       = count;
+    document.getElementById('bar-' + id).style.width      = pct(count);
+  };
+  setRoute('direct', routeCounts.direct);
+  setRoute('proxy',  routeCounts.proxy);
+  setRoute('sim',    sim);
+  setRoute('failed', fail);
+}
+
+function toggleSourceBody() {
+  const body    = document.getElementById('sourceBody');
+  const chevron = document.getElementById('sourceToggle');
+  const isOpen  = body.classList.toggle('open');
+  chevron.classList.toggle('open', isOpen);
 }
 
 // ── Kick off on load ──

@@ -8,58 +8,38 @@
   @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap');
 
   :root {
-    --bg: #0a0c0f;
-    --panel: #111418;
-    --border: #1e2530;
-    --accent: #00ff88;
-    --accent2: #00c4ff;
-    --red: #ff4466;
-    --yellow: #ffcc00;
-    --text: #e8edf5;
-    --muted: #5a6478;
-    --card: #141820;
+    --bg: #0a0c0f; --panel: #111418; --border: #1e2530;
+    --accent: #00ff88; --accent2: #00c4ff; --red: #ff4466;
+    --yellow: #ffcc00; --text: #e8edf5; --muted: #5a6478; --card: #141820;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Syne', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
+    background: var(--bg); color: var(--text);
+    font-family: 'Syne', sans-serif; min-height: 100vh; overflow-x: hidden;
   }
 
   body::before {
-    content: '';
-    position: fixed; inset: 0;
+    content: ''; position: fixed; inset: 0;
     background-image:
       linear-gradient(rgba(0,255,136,0.025) 1px, transparent 1px),
       linear-gradient(90deg, rgba(0,255,136,0.025) 1px, transparent 1px);
-    background-size: 44px 44px;
-    pointer-events: none;
-    z-index: 0;
+    background-size: 44px 44px; pointer-events: none; z-index: 0;
   }
 
   .wrap { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 24px 80px; }
 
-  /* ── Header ── */
   header { padding: 36px 0 28px; border-bottom: 1px solid var(--border); }
-
   .header-inner { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
-
   .logo-tag { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--accent); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; }
-
   h1 { font-size: clamp(26px, 4.5vw, 46px); font-weight: 800; letter-spacing: -1.5px; line-height: 1; }
   h1 em { color: var(--accent); font-style: normal; }
-
   .subtitle { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--muted); margin-top: 8px; letter-spacing: 1px; }
-
-  .hdr-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+  .hdr-btns { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 
   .btn-primary {
-    background: var(--accent); color: #000;
-    border: none; padding: 13px 28px;
+    background: var(--accent); color: #000; border: none; padding: 13px 28px;
     font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
     letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
     clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
@@ -68,154 +48,104 @@
   .btn-primary:hover { background: #00ffaa; transform: translateY(-1px); }
   .btn-primary:disabled { background: var(--muted); cursor: not-allowed; transform: none; }
 
-  .btn-sec {
-    background: transparent; color: var(--muted);
-    border: 1px solid var(--border); padding: 13px 20px;
-    font-family: 'Space Mono', monospace; font-size: 10px;
-    letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
-    transition: all 0.2s; white-space: nowrap;
+  .data-mode {
+    font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 1px;
+    padding: 5px 10px; border: 1px solid var(--border); color: var(--muted);
+    text-transform: uppercase;
   }
-  .btn-sec:hover { border-color: var(--accent2); color: var(--accent2); }
+  .data-mode.live { border-color: var(--accent); color: var(--accent); }
+  .data-mode.sim  { border-color: var(--yellow); color: var(--yellow); }
 
-  /* ── Filters ── */
   .filters {
     display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
     padding: 20px 0; border-bottom: 1px solid var(--border);
   }
-
   .filter-chip {
     display: flex; align-items: center; gap: 8px;
-    background: var(--panel); border: 1px solid var(--border);
-    padding: 7px 14px;
+    background: var(--panel); border: 1px solid var(--border); padding: 7px 14px;
   }
-
   .filter-chip label { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; white-space: nowrap; }
-
-  .filter-chip input[type=number],
-  .filter-chip select {
+  .filter-chip input[type=number], .filter-chip select {
     background: transparent; border: none; outline: none;
     color: var(--text); font-family: 'Space Mono', monospace; font-size: 12px;
     cursor: pointer; -webkit-appearance: none; width: auto;
   }
   .filter-chip select option { background: #1a1f28; }
 
-  /* ── Status bar ── */
   .statusbar {
     display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
     padding: 14px 0; border-bottom: 1px solid var(--border);
-    font-family: 'Space Mono', monospace; font-size: 10px; color: var(--muted);
-    min-height: 50px;
+    font-family: 'Space Mono', monospace; font-size: 10px; color: var(--muted); min-height: 50px;
   }
-
   .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); flex-shrink: 0; transition: background 0.3s; }
-  .dot.idle   { background: var(--muted); }
-  .dot.run    { background: var(--accent); animation: blink 0.9s ease-in-out infinite; }
-  .dot.done   { background: var(--accent); }
-  .dot.warn   { background: var(--yellow); }
+  .dot.run  { background: var(--accent); animation: blink 0.9s ease-in-out infinite; }
+  .dot.done { background: var(--accent); }
+  .dot.warn { background: var(--yellow); }
+  .dot.err  { background: var(--red); }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
 
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+  .progress-track { height: 2px; background: var(--border); width: 220px; flex-shrink: 0; display: none; }
+  .progress-fill  { height: 100%; background: var(--accent); transition: width 0.2s; width: 0; }
 
-  .progress-track { height: 2px; background: var(--border); width: 200px; flex-shrink: 0; display: none; }
-  .progress-fill  { height: 100%; background: var(--accent); transition: width 0.25s; width: 0; }
-
-  /* ── Tabs ── */
   .tabs { display: flex; padding-top: 22px; border-bottom: 1px solid var(--border); }
-
   .tab {
-    padding: 9px 22px; font-family: 'Space Mono', monospace;
-    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-    cursor: pointer; color: var(--muted);
+    padding: 9px 22px; font-family: 'Space Mono', monospace; font-size: 10px;
+    letter-spacing: 2px; text-transform: uppercase; cursor: pointer; color: var(--muted);
     border: 1px solid transparent; border-bottom: none;
-    position: relative; top: 1px; background: transparent;
-    transition: color 0.15s;
+    position: relative; top: 1px; background: transparent; transition: color 0.15s;
   }
   .tab:hover { color: var(--text); }
   .tab.on { color: var(--accent); border-color: var(--border); border-bottom-color: var(--bg); background: var(--bg); }
-
-  .badge {
-    display: inline-block; background: var(--accent); color: #000;
-    font-size: 8px; padding: 1px 5px; border-radius: 8px;
-    margin-left: 5px; font-weight: 700; vertical-align: middle;
-  }
+  .badge { display: inline-block; background: var(--accent); color: #000; font-size: 8px; padding: 1px 5px; border-radius: 8px; margin-left: 5px; font-weight: 700; vertical-align: middle; }
   .badge.red { background: var(--red); color: #fff; }
 
-  /* ── Grid ── */
   .results { padding: 24px 0; }
-
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 14px; }
-
-  .empty {
-    text-align: center; padding: 80px 20px;
-    font-family: 'Space Mono', monospace; font-size: 11px;
-    color: var(--muted); line-height: 2.2;
-  }
+  .empty { text-align: center; padding: 80px 20px; font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); line-height: 2.4; }
   .empty .icon { font-size: 44px; display: block; margin-bottom: 16px; opacity: 0.2; }
 
-  /* ── Card ── */
   .card {
-    background: var(--card); border: 1px solid var(--border);
-    padding: 18px; cursor: default;
-    transition: border-color 0.18s, background 0.18s;
-    animation: fadeUp 0.3s ease both;
+    background: var(--card); border: 1px solid var(--border); padding: 18px;
+    transition: border-color 0.18s, background 0.18s; animation: fadeUp 0.3s ease both;
   }
   @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
-
   .card:hover { border-color: rgba(0,255,136,0.35); background: #161c24; }
   .card.star  { border-color: var(--accent2); background: rgba(0,196,255,0.04); }
-  .card.dead  { border-color: rgba(255,68,102,0.3); opacity: 0.45; }
+  .card.dead  { border-color: rgba(255,68,102,0.3); opacity: 0.42; }
 
   .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-
   .ticker { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
-
-  .co-name {
-    font-family: 'Space Mono', monospace; font-size: 9px; color: var(--muted);
-    margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 190px;
-  }
-
+  .co-name { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--muted); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 195px; }
   .score-chip {
     background: linear-gradient(135deg, var(--accent) 0%, #00c4ff 100%);
-    color: #000; padding: 3px 9px;
-    font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
-    clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px));
-    flex-shrink: 0;
+    color: #000; padding: 3px 9px; font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
+    clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px)); flex-shrink: 0;
   }
 
-  /* Sparkline */
   .spark { height: 56px; margin: 10px 0; }
   .spark svg { width: 100%; height: 100%; overflow: visible; }
 
-  /* Stats */
   .stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-bottom: 14px; }
-
   .stat { background: var(--panel); padding: 7px 9px; }
   .stat-lbl { font-family: 'Space Mono', monospace; font-size: 8px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 2px; }
   .stat-val { font-size: 13px; font-weight: 700; }
-  .g { color: var(--accent); }
-  .r { color: var(--red); }
+  .g { color: var(--accent); } .r { color: var(--red); }
 
-  /* Actions */
   .card-acts { display: flex; gap: 7px; }
-
   .act {
-    flex: 1; padding: 7px 6px;
-    font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
-    border: 1px solid var(--border); background: transparent; cursor: pointer; transition: all 0.14s;
-    color: var(--muted);
+    flex: 1; padding: 7px 6px; font-family: 'Space Mono', monospace; font-size: 9px;
+    letter-spacing: 1px; text-transform: uppercase; border: 1px solid var(--border);
+    background: transparent; cursor: pointer; transition: all 0.14s; color: var(--muted);
   }
-  .act.research     { color: var(--accent2); border-color: rgba(0,196,255,0.3); }
+  .act.research { color: var(--accent2); border-color: rgba(0,196,255,0.3); }
   .act.research:hover, .act.research.on { background: rgba(0,196,255,0.08); border-color: var(--accent2); }
-  .act.trash        { color: var(--red);    border-color: rgba(255,68,102,0.3); }
-  .act.trash:hover, .act.trash.on   { background: rgba(255,68,102,0.08); border-color: var(--red); }
+  .act.trash { color: var(--red); border-color: rgba(255,68,102,0.3); }
+  .act.trash:hover, .act.trash.on { background: rgba(255,68,102,0.08); border-color: var(--red); }
 
-  /* ── Research panel ── */
   .rpanel { display: none; margin-top: 28px; border: 1px solid var(--accent2); padding: 18px 22px; }
   .rpanel.on { display: block; }
-
   .rpanel-ttl { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--accent2); text-transform: uppercase; margin-bottom: 14px; }
-
   .pills { display: flex; flex-wrap: wrap; gap: 8px; }
-
   .pill {
     background: rgba(0,196,255,0.08); border: 1px solid var(--accent2);
     color: var(--accent2); padding: 5px 12px;
@@ -225,35 +155,32 @@
   .pill button { background: none; border: none; color: inherit; cursor: pointer; font-size: 15px; opacity: 0.55; line-height: 1; }
   .pill button:hover { opacity: 1; }
 
-  /* ── Footer note ── */
   .footnote {
-    margin-top: 44px; padding: 14px 18px;
-    border-left: 2px solid var(--accent);
-    background: rgba(0,255,136,0.02);
-    font-family: 'Space Mono', monospace; font-size: 9px; color: var(--muted); line-height: 1.9;
+    margin-top: 44px; padding: 14px 18px; border-left: 2px solid var(--accent);
+    background: rgba(0,255,136,0.02); font-family: 'Space Mono', monospace;
+    font-size: 9px; color: var(--muted); line-height: 1.9;
   }
   .footnote strong { color: var(--accent); }
+  .footnote a { color: var(--accent2); text-decoration: none; }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <!-- Header -->
   <header>
     <div class="header-inner">
       <div>
         <div class="logo-tag">// Momentum Scanner</div>
         <h1>Trend <em>Hunter</em></h1>
-        <p class="subtitle">4-MONTH BREAKOUT PATTERN DETECTOR · NYSE + NASDAQ</p>
+        <p class="subtitle">4-MONTH BREAKOUT PATTERN · LIVE YAHOO FINANCE DATA</p>
       </div>
       <div class="hdr-btns">
-        <button class="btn-sec" onclick="runScan()">↻ Re-Scan</button>
+        <span class="data-mode" id="modeTag">● INITIALIZING</span>
         <button class="btn-primary" id="mainBtn" onclick="runScan()">▶ Scan Market</button>
       </div>
     </div>
   </header>
 
-  <!-- Filters -->
   <div class="filters">
     <div class="filter-chip">
       <label>Min Gain</label>
@@ -284,25 +211,20 @@
     </div>
   </div>
 
-  <!-- Status -->
   <div class="statusbar">
-    <div class="dot idle" id="dot"></div>
-    <span id="statusMsg">Press <strong>Scan Market</strong> to find stocks matching the 4-month momentum pattern.</span>
+    <div class="dot" id="dot"></div>
+    <span id="statusMsg">Starting up…</span>
     <div class="progress-track" id="track"><div class="progress-fill" id="fill"></div></div>
   </div>
 
-  <!-- Tabs -->
   <div class="tabs">
-    <div class="tab on" id="tab-all" onclick="setTab('all')">All Results <span class="badge" id="b-all">0</span></div>
+    <div class="tab on" id="tab-all"      onclick="setTab('all')">All Results <span class="badge" id="b-all">0</span></div>
     <div class="tab"    id="tab-research" onclick="setTab('research')">★ Research <span class="badge" id="b-research">0</span></div>
     <div class="tab"    id="tab-trash"    onclick="setTab('trash')">✕ Discard <span class="badge red" id="b-trash">0</span></div>
   </div>
 
-  <!-- Results -->
   <div class="results">
-    <div id="grid">
-      <div class="empty"><span class="icon">◈</span>Press <strong>Scan Market</strong> to find momentum stocks.</div>
-    </div>
+    <div id="grid"><div class="empty"><span class="icon">◈</span>Initializing scanner…</div></div>
     <div class="rpanel" id="rpanel">
       <div class="rpanel-ttl">★ Research Pile</div>
       <div class="pills" id="pillbox"></div>
@@ -310,312 +232,360 @@
   </div>
 
   <div class="footnote">
-    <strong>HOW SCORING WORKS:</strong> Each stock is scored on (1) total gain from 4-month trough to peak, (2) trend smoothness — R² of linear regression through the uptrend, (3) healthy post-peak pullback of 5–25% suggesting consolidation, (4) rising volume during the run. The pattern targets stocks that climbed steadily over ~4 months then pulled back slightly — exactly the Tetra Technologies setup.<br><br>
-    <strong>DATA:</strong> Prices are simulated using real sector momentum patterns. For live data, open in a browser with internet access and the scanner will fetch Yahoo Finance directly.<br><br>
-    <strong>DISCLAIMER:</strong> Not financial advice. Technical screening tool only. Always do your own due diligence.
+    <strong>HOW IT WORKS:</strong> Scans ~200 NYSE/NASDAQ tickers via Yahoo Finance. Scores each on: total 4-month gain from trough → peak, trend smoothness (R² of linear regression), healthy 5–25% pullback from peak (consolidation setup), and volume expansion. Higher score = closer match to a steady multi-month breakout.<br><br>
+    <strong>DATA SOURCE:</strong> Live prices from Yahoo Finance public API. A CORS proxy (<a href="https://corsproxy.io" target="_blank">corsproxy.io</a>) is used to bypass browser restrictions. If blocked, falls back to simulated data so the UI always works.<br><br>
+    <strong>DISCLAIMER:</strong> Not financial advice. Technical screening only. Always do your own research.
   </div>
 </div>
 
 <script>
-// ─────────────────────────────────────────────
+// ═══════════════════════════════════════════════════
 // STATE
-// ─────────────────────────────────────────────
+// ═══════════════════════════════════════════════════
 let allStocks   = [];
 let activeTab   = 'all';
 let researchSet = new Set();
 let trashSet    = new Set();
+let usingLive   = false;   // true = real Yahoo data, false = simulated
 
-// ─────────────────────────────────────────────
-// STOCK DATABASE — realistic price seeds
-// Each entry: ticker, name, sector, startPrice, peakMult, noise, daysToRun, currentDip
-// ─────────────────────────────────────────────
-const STOCK_DB = [
-  // High-confidence momentum names (strong pattern)
-  { t:'TTI',   n:'Tetra Technologies',       s:'Energy',       p:3.2,  m:3.6, ns:0.04, dr:72, dip:0.10 },
-  { t:'HIMS',  n:'Hims & Hers Health',        s:'Healthcare',   p:7.5,  m:2.8, ns:0.05, dr:68, dip:0.13 },
-  { t:'IONQ',  n:'IonQ Inc',                  s:'Tech',         p:9.2,  m:2.9, ns:0.06, dr:70, dip:0.15 },
-  { t:'DKNG',  n:'DraftKings Inc',            s:'Consumer',     p:28.1, m:1.9, ns:0.05, dr:65, dip:0.08 },
-  { t:'AXON',  n:'Axon Enterprise',           s:'Tech',         p:62.4, m:2.1, ns:0.04, dr:74, dip:0.12 },
-  { t:'DUOL',  n:'Duolingo Inc',              s:'Tech',         p:88.0, m:2.4, ns:0.05, dr:66, dip:0.09 },
-  { t:'BOOT',  n:'Boot Barn Holdings',        s:'Retail',       p:37.2, m:2.3, ns:0.04, dr:70, dip:0.11 },
-  { t:'CRDO',  n:'Credo Technology',          s:'Semiconductors',p:12.5,m:3.1, ns:0.06, dr:68, dip:0.17 },
-  { t:'MARA',  n:'Marathon Digital Holdings', s:'Crypto',       p:8.3,  m:3.4, ns:0.09, dr:60, dip:0.20 },
-  { t:'CLSK',  n:'CleanSpark Inc',            s:'Crypto',       p:6.7,  m:3.2, ns:0.08, dr:62, dip:0.18 },
-  { t:'IREN',  n:'Iris Energy',               s:'Crypto',       p:4.1,  m:3.5, ns:0.08, dr:64, dip:0.16 },
-  { t:'CIFR',  n:'Cipher Mining',             s:'Crypto',       p:2.9,  m:3.8, ns:0.09, dr:58, dip:0.21 },
-  { t:'ACMR',  n:'ACM Research',              s:'Semiconductors',p:14.2,m:2.7, ns:0.06, dr:70, dip:0.14 },
-  { t:'CLDX',  n:'Celldex Therapeutics',      s:'Biotech',      p:11.8, m:2.6, ns:0.07, dr:65, dip:0.19 },
-  { t:'GTLB',  n:'GitLab Inc',                s:'Tech',         p:38.4, m:2.2, ns:0.05, dr:71, dip:0.10 },
-  { t:'CRUS',  n:'Cirrus Logic',              s:'Semiconductors',p:52.3,m:1.8, ns:0.04, dr:73, dip:0.08 },
-  { t:'CDNA',  n:'CareDx Inc',               s:'Healthcare',   p:9.6,  m:2.9, ns:0.06, dr:67, dip:0.15 },
-  { t:'RELY',  n:'Remitly Global',            s:'Fintech',      p:16.3, m:2.4, ns:0.05, dr:70, dip:0.12 },
-  { t:'AVNT',  n:'Avient Corporation',        s:'Materials',    p:34.7, m:1.9, ns:0.04, dr:72, dip:0.09 },
-  { t:'FORM',  n:'FormFactor Inc',            s:'Semiconductors',p:28.1,m:2.2, ns:0.05, dr:68, dip:0.11 },
-  { t:'DOCN',  n:'DigitalOcean Holdings',     s:'Cloud',        p:22.5, m:2.5, ns:0.05, dr:69, dip:0.13 },
-  { t:'CARG',  n:'CarGurus Inc',              s:'Auto/Tech',    p:18.9, m:2.1, ns:0.05, dr:71, dip:0.10 },
-  { t:'BAND',  n:'Bandwidth Inc',             s:'Communications',p:11.4,m:2.6, ns:0.06, dr:66, dip:0.14 },
-  { t:'DOMO',  n:'Domo Inc',                  s:'SaaS',         p:7.8,  m:2.8, ns:0.07, dr:63, dip:0.18 },
-
-  // Medium-confidence — good pattern, more volatile
-  { t:'RXRX',  n:'Recursion Pharma',          s:'Biotech',      p:5.3,  m:2.4, ns:0.08, dr:60, dip:0.22 },
-  { t:'ACHR',  n:'Archer Aviation',           s:'EV/Air',       p:4.2,  m:3.0, ns:0.10, dr:58, dip:0.19 },
-  { t:'LUNR',  n:'Intuitive Machines',        s:'Space',        p:5.1,  m:2.8, ns:0.10, dr:56, dip:0.23 },
-  { t:'NVTS',  n:'Navitas Semiconductor',     s:'Semiconductors',p:3.4, m:2.5, ns:0.08, dr:61, dip:0.20 },
-  { t:'ATEC',  n:'Alphatec Holdings',         s:'Medical Dev',  p:9.7,  m:2.0, ns:0.06, dr:67, dip:0.12 },
-  { t:'CORR',  n:'CorEnergy Infrastructure',  s:'Energy',       p:4.8,  m:2.3, ns:0.07, dr:64, dip:0.15 },
-  { t:'CPRT',  n:'Copart Inc',                s:'Auto',         p:42.1, m:1.7, ns:0.03, dr:75, dip:0.07 },
-  { t:'CERT',  n:'Certara Inc',               s:'Healthcare IT',p:12.3, m:2.1, ns:0.05, dr:70, dip:0.10 },
-  { t:'DIOD',  n:'Diodes Incorporated',       s:'Semiconductors',p:41.5,m:1.8, ns:0.04, dr:72, dip:0.08 },
-  { t:'DVAX',  n:'Dynavax Technologies',      s:'Biotech',      p:11.2, m:2.3, ns:0.07, dr:63, dip:0.17 },
-  { t:'COHU',  n:'Cohu Inc',                  s:'Semiconductors',p:18.4,m:2.0, ns:0.06, dr:68, dip:0.12 },
-  { t:'DLHC',  n:'DLH Holdings',              s:'Healthcare',   p:7.1,  m:2.6, ns:0.07, dr:64, dip:0.16 },
-  { t:'COOP',  n:'Mr. Cooper Group',          s:'Mortgage',     p:52.3, m:1.8, ns:0.04, dr:71, dip:0.09 },
-  { t:'DRVN',  n:'Driven Brands Holdings',    s:'Auto Services',p:9.8,  m:2.2, ns:0.06, dr:66, dip:0.14 },
-  { t:'FCFS',  n:'FirstCash Holdings',        s:'Financial',    p:88.4, m:1.6, ns:0.03, dr:74, dip:0.06 },
-  { t:'FUTU',  n:'Futu Holdings',             s:'Fintech',      p:44.2, m:2.3, ns:0.07, dr:63, dip:0.16 },
-  { t:'GKOS',  n:'Glaukos Corporation',       s:'Medical Dev',  p:68.9, m:1.9, ns:0.05, dr:69, dip:0.11 },
-  { t:'GLBE',  n:'Global-E Online',           s:'E-Commerce',   p:18.7, m:2.4, ns:0.06, dr:66, dip:0.15 },
-  { t:'HOLX',  n:'Hologic Inc',               s:'Healthcare',   p:62.1, m:1.7, ns:0.03, dr:73, dip:0.07 },
-  { t:'CNMD',  n:'CONMED Corporation',        s:'Medical Dev',  p:43.2, m:1.8, ns:0.04, dr:70, dip:0.09 },
-  { t:'ADMA',  n:'ADMA Biologics',            s:'Biotech',      p:4.3,  m:3.0, ns:0.08, dr:61, dip:0.20 },
-  { t:'AEHR',  n:'Aehr Test Systems',         s:'Semiconductors',p:11.6,m:2.4, ns:0.08, dr:63, dip:0.18 },
-  { t:'ALKT',  n:'Alkami Technology',         s:'Fintech',      p:14.8, m:2.2, ns:0.06, dr:67, dip:0.13 },
-  { t:'AMPH',  n:'Amphastar Pharma',          s:'Pharma',       p:28.3, m:2.0, ns:0.05, dr:69, dip:0.10 },
+// ═══════════════════════════════════════════════════
+// TICKER UNIVERSE  (~200 liquid NYSE/NASDAQ names)
+// ═══════════════════════════════════════════════════
+const TICKERS = [
+  // Large/mega cap momentum
+  'NVDA','AMD','SMCI','MELI','CELH','AXON','DKNG','DUOL','COIN','ASTS',
+  // Mid cap growth
+  'HIMS','IONQ','RXRX','ACHR','LUNR','RKLB','JOBY','CIFR','MARA','CLSK',
+  'IREN','RIOT','HUT','WULF','CORZ','BTBT','BITF','SDIG','NKLA','BLNK',
+  // Tech / SaaS
+  'GTLB','DOMO','DOCN','BAND','CARG','ALKT','RELY','FRSH','FSLY','BASE',
+  'BIGC','COUR','ASAN','S','SMAR','JAMF','SUMO','AMPL','MTTR','PAYO',
+  // Semiconductors
+  'CRDO','ACMR','AEHR','COHU','FORM','DIOD','NVTS','CRUS','SITM','POWI',
+  'AMBA','ALGM','AIOT','OPAD','MLGO','LSCC','RMBS','KLIC','ONTO','UCTT',
+  // Healthcare / Biotech
+  'HALO','CDNA','CLDX','ADMA','DVAX','RXDX','ARDX','ARQT','CRNX','FOLD',
+  'ROIV','PMVP','IMVT','AVDX','BHVN','CPRX','AMPH','ANIP','CERT','AGIO',
+  // Financials / Fintech
+  'FUTU','DLO','GCMG','ATLC','FBRT','FCFS','COOP','BRKL','CCNE','CHCO',
+  'CVBF','CWBC','FFBC','FISI','BCAL','BSIG','DLHC','GGAL','PAYO','STEP',
+  // Energy
+  'TTI','ARLP','CORR','ALTG','CBUS','DXP','DXPE','ARCB','APOG','ATRO',
+  // Consumer / Retail
+  'BOOT','BRBR','DRVN','CARG','CHDN','CBRL','DENN','COOK','CONN','CWH',
+  // Industrial / Misc
+  'AVNT','FORM','CPRT','CERT','CNMD','GKOS','HOLX','ATEC','CEVA','FCNCA',
+  // Small cap speculative
+  'AGYS','ALRM','AORT','AZTA','AZEK','BCOV','BFLY','BFAM','BLBD','BAND',
+  'CALX','CARE','CASS','CCCS','CLBT','CLFD','CMBT','CMCO','CNXC','DCBO',
+  'DCOM','DGII','DLHC','DOCS','DORM','DYAI','EGHT','ENVX','EPAM','EVI',
+  'EXAS','EXPI','EXTR','FATE','FLNC','FLYW','GATO','GETY','GLBE','GLDD',
+  'GLNG','GPRO','GRND','GSAT','GTLS','HAYW','HLLY','HOLX','CNMD','ADMA',
 ];
 
-// ─────────────────────────────────────────────
-// PRICE GENERATION
-// Generates realistic OHLC-style close prices
-// ─────────────────────────────────────────────
-function seededRand(seed) {
-  // Simple seeded PRNG for reproducibility
-  let s = seed % 2147483647;
-  return function() {
-    s = (s * 16807 + 0) % 2147483647;
-    return (s - 1) / 2147483646;
+// Deduplicate
+const TICKER_LIST = [...new Set(TICKERS)];
+
+// ═══════════════════════════════════════════════════
+// LIVE DATA — Yahoo Finance via CORS proxy
+// ═══════════════════════════════════════════════════
+const PROXY = 'https://corsproxy.io/?';
+
+async function fetchYahoo(ticker) {
+  const end   = Math.floor(Date.now() / 1000);
+  const start = end - 150 * 86400;   // ~5 months back
+  const url   = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d&period1=${start}&period2=${end}`;
+
+  // Try direct first (works on some deployments), then proxy
+  for (const attempt of [url, PROXY + encodeURIComponent(url)]) {
+    try {
+      const res = await fetch(attempt, { signal: AbortSignal.timeout(8000) });
+      if (!res.ok) continue;
+      const json = await res.json();
+      const result = json?.chart?.result?.[0];
+      if (!result) continue;
+
+      const rawCloses  = result.indicators?.quote?.[0]?.close  ?? [];
+      const rawVolumes = result.indicators?.quote?.[0]?.volume ?? [];
+      const meta       = result.meta ?? {};
+
+      // Filter out null/NaN values
+      const valid = rawCloses
+        .map((c, i) => ({ c, v: rawVolumes[i] || 0 }))
+        .filter(x => x.c != null && isFinite(x.c) && x.c > 0);
+
+      if (valid.length < 55) continue;
+
+      return {
+        ticker,
+        name:         meta.shortName || meta.longName || ticker,
+        currentPrice: meta.regularMarketPrice || valid[valid.length - 1].c,
+        prices:  valid.map(x => x.c),
+        volumes: valid.map(x => x.v),
+        live: true,
+      };
+    } catch (_) { /* try next */ }
+  }
+  return null;
+}
+
+// ═══════════════════════════════════════════════════
+// SIMULATED DATA — fallback if Yahoo blocked
+// ═══════════════════════════════════════════════════
+const SIM_DB = {
+  // ticker -> [startPrice, peakMult, noise, daysToRun, dip]
+  'NVDA': [50,  2.8, 0.04, 72, 0.12], 'AMD':  [18,  2.4, 0.05, 68, 0.14],
+  'SMCI': [30,  3.5, 0.07, 65, 0.18], 'MELI': [160, 2.0, 0.04, 74, 0.09],
+  'AXON': [62,  2.1, 0.04, 73, 0.11], 'DKNG': [28,  1.9, 0.05, 66, 0.08],
+  'DUOL': [88,  2.4, 0.05, 69, 0.09], 'COIN': [40,  2.7, 0.07, 62, 0.17],
+  'HIMS': [7.5, 2.8, 0.05, 68, 0.13], 'IONQ': [9.2, 2.9, 0.06, 67, 0.15],
+  'MARA': [8.3, 3.4, 0.09, 60, 0.20], 'CLSK': [6.7, 3.2, 0.08, 62, 0.18],
+  'IREN': [4.1, 3.5, 0.08, 64, 0.16], 'CIFR': [2.9, 3.8, 0.09, 58, 0.21],
+  'CRDO': [12.5,3.1, 0.06, 68, 0.17], 'AEHR': [11.6,2.4, 0.08, 63, 0.18],
+  'BOOT': [37,  2.3, 0.04, 70, 0.11], 'DOCN': [22,  2.5, 0.05, 69, 0.13],
+  'ADMA': [4.3, 3.0, 0.08, 61, 0.20], 'CDNA': [9.6, 2.9, 0.06, 67, 0.15],
+  'TTI':  [3.2, 3.6, 0.04, 72, 0.10], 'GTLB': [38,  2.2, 0.05, 71, 0.10],
+  'BRBR': [24,  2.1, 0.04, 70, 0.09], 'FUTU': [44,  2.3, 0.07, 63, 0.16],
+  'RXRX': [5.3, 2.4, 0.08, 60, 0.22], 'ACHR': [4.2, 3.0, 0.10, 58, 0.19],
+  'LUNR': [5.1, 2.8, 0.10, 56, 0.23], 'NVTS': [3.4, 2.5, 0.08, 61, 0.20],
+  'CLDX': [11.8,2.6, 0.07, 65, 0.19], 'DVAX': [11.2,2.3, 0.07, 63, 0.17],
+  'CPRT': [42,  1.7, 0.03, 75, 0.07], 'HOLX': [62,  1.7, 0.03, 73, 0.07],
+  'CRUS': [52,  1.8, 0.04, 73, 0.08], 'AVNT': [34,  1.9, 0.04, 72, 0.09],
+  'DOMO': [7.8, 2.8, 0.07, 63, 0.18], 'BAND': [11,  2.6, 0.06, 66, 0.14],
+  'CARG': [18,  2.1, 0.05, 71, 0.10], 'ALKT': [14,  2.2, 0.06, 67, 0.13],
+};
+
+function seededRng(seed) {
+  let s = (seed % 2147483647 + 2147483647) % 2147483647;
+  return () => { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; };
+}
+
+function simulatePrices(ticker) {
+  const params = SIM_DB[ticker];
+  const [startP, peakMult, noise, daysRun, dip] = params
+    || [10 + (ticker.charCodeAt(0) % 30), 2.0 + Math.random(), 0.06, 65, 0.14];
+
+  const rand      = seededRng(ticker.split('').reduce((a, c) => a + c.charCodeAt(0), 0));
+  const totalDays = 88;
+  const peakDay   = Math.min(daysRun, totalDays - 8);
+  const peakPrice = startP * peakMult;
+  const prices    = [];
+
+  // Setup (slight drift / flat)
+  let price = startP * (1 + (rand() - 0.52) * 0.05);
+  for (let i = 0; i < 10; i++) {
+    price *= 1 - rand() * 0.005;
+    prices.push(Math.max(0.1, price * (1 + (rand() - 0.5) * noise)));
+  }
+
+  // Uptrend
+  for (let i = 0; i < peakDay; i++) {
+    const t      = i / peakDay;
+    const eased  = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+    const target = startP + (peakPrice - startP) * eased;
+    price        = price * 0.3 + target * 0.7;
+    prices.push(Math.max(0.1, price * (1 + (rand() - 0.47) * noise)));
+  }
+
+  // Pullback / consolidation
+  const dipTarget = peakPrice * (1 - dip);
+  const remain    = totalDays - prices.length;
+  for (let i = 0; i < remain; i++) {
+    const t      = i / Math.max(1, remain - 1);
+    const target = peakPrice - (peakPrice - dipTarget) * Math.sqrt(t);
+    price        = price * 0.35 + target * 0.65;
+    prices.push(Math.max(0.1, price * (1 + (rand() - 0.52) * noise * 0.7)));
+  }
+
+  const volumes = prices.map((_, i) =>
+    Math.floor((400000 + rand() * 900000) * (1 + (i / prices.length) * 1.2))
+  );
+
+  return {
+    ticker,
+    name: ticker,
+    currentPrice: prices[prices.length - 1],
+    prices,
+    volumes,
+    live: false,
   };
 }
 
-function generatePrices(entry) {
-  const { p: startPrice, m: peakMult, ns: noise, dr: daysToRun, dip } = entry;
-  const rand = seededRand(entry.t.charCodeAt(0) * 1000 + entry.t.charCodeAt(1));
-  
-  const totalDays = 88;
-  const peakDay   = Math.min(daysToRun, totalDays - 8);
-  const peakPrice = startPrice * peakMult;
-  const prices    = [];
-
-  // Slight downtrend before the run (first 10-12 days)
-  const setupDays = 10;
-  for (let i = 0; i < setupDays; i++) {
-    const drift = 1 - (rand() * 0.004);
-    const prev  = prices.length > 0 ? prices[prices.length - 1] : startPrice * (1 + (rand() - 0.5) * noise);
-    prices.push(Math.max(0.1, prev * drift * (1 + (rand() - 0.5) * noise)));
-  }
-
-  // Uptrend phase: smooth exponential climb with noise
-  for (let i = 0; i < peakDay; i++) {
-    const progress  = i / peakDay;
-    // Slightly accelerating to mimic real breakouts
-    const eased     = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
-    const targetPct = eased;
-    const target    = startPrice + (peakPrice - startPrice) * targetPct;
-    const prev      = prices[prices.length - 1];
-    // Pull toward target + noise
-    const pulled    = prev * 0.35 + target * 0.65;
-    prices.push(Math.max(0.1, pulled * (1 + (rand() - 0.48) * noise)));
-  }
-
-  // Pullback / consolidation phase
-  const dipTarget = peakPrice * (1 - dip);
-  const remainDays = totalDays - prices.length;
-  for (let i = 0; i < remainDays; i++) {
-    const progress = i / Math.max(1, remainDays - 1);
-    const target   = peakPrice - (peakPrice - dipTarget) * Math.sqrt(progress);
-    const prev     = prices[prices.length - 1];
-    const pulled   = prev * 0.4 + target * 0.6;
-    prices.push(Math.max(0.1, pulled * (1 + (rand() - 0.52) * noise * 0.8)));
-  }
-
-  return prices;
-}
-
-function generateVolumes(prices, rand) {
-  // Volume generally rises during uptrend
-  const n = prices.length;
-  return prices.map((p, i) => {
-    const trendBoost = 1 + (i / n) * 1.4;
-    const base       = 300000 + rand() * 800000;
-    return Math.floor(base * trendBoost * (0.7 + rand() * 0.6));
-  });
-}
-
-// ─────────────────────────────────────────────
+// ═══════════════════════════════════════════════════
 // SCORING
-// ─────────────────────────────────────────────
+// ═══════════════════════════════════════════════════
 function calcR2(ys) {
   const n = ys.length;
   if (n < 3) return 0;
-  const xs   = ys.map((_, i) => i);
-  const xm   = xs.reduce((a, b) => a + b) / n;
-  const ym   = ys.reduce((a, b) => a + b) / n;
+  const xm = (n - 1) / 2;
+  const ym = ys.reduce((a, b) => a + b, 0) / n;
   let sxy = 0, sxx = 0, tot = 0, res = 0;
   for (let i = 0; i < n; i++) {
-    sxy += (xs[i] - xm) * (ys[i] - ym);
-    sxx += (xs[i] - xm) ** 2;
+    sxy += (i - xm) * (ys[i] - ym);
+    sxx += (i - xm) ** 2;
     tot += (ys[i] - ym) ** 2;
   }
-  if (sxx === 0 || tot === 0) return 0;
-  const slope = sxy / sxx;
-  const b     = ym - slope * xm;
-  for (let i = 0; i < n; i++) res += (ys[i] - (slope * i + b)) ** 2;
+  if (!sxx || !tot) return 0;
+  const m = sxy / sxx, b = ym - m * xm;
+  for (let i = 0; i < n; i++) res += (ys[i] - (m * i + b)) ** 2;
   return Math.max(0, 1 - res / tot);
 }
 
-function scoreStock(prices, volumes, opts) {
+function scoreStock(data, opts) {
   const { minGain, minPrice, maxPrice, smoothness, pullbackMode } = opts;
-  const currentPrice = prices[prices.length - 1];
+  const { prices, volumes, currentPrice } = data;
 
   if (currentPrice < minPrice || currentPrice > maxPrice) return null;
 
-  const n  = prices.length;
-  // Find trough in first 25% of window
-  const setupEnd = Math.max(5, Math.floor(n * 0.25));
-  const setup    = prices.slice(0, setupEnd);
-  const troughP  = Math.min(...setup);
-  const troughI  = setup.indexOf(troughP);
+  const n        = prices.length;
+  const setupEnd = Math.max(5, Math.floor(n * 0.28));
+  const troughP  = Math.min(...prices.slice(0, setupEnd));
+  const troughI  = prices.slice(0, setupEnd).indexOf(troughP);
+  const after    = prices.slice(troughI);
+  const peakP    = Math.max(...after);
+  const peakI    = after.indexOf(peakP);
+  const gain     = (peakP - troughP) / troughP;
 
-  const afterTrough = prices.slice(troughI);
-  const peakP       = Math.max(...afterTrough);
-  const peakI       = afterTrough.indexOf(peakP);
-  const totalGain   = (peakP - troughP) / troughP;
+  if (gain < minGain) return null;
 
-  if (totalGain < minGain) return null;
+  const daysSincePeak = after.length - 1 - peakI;
+  if (daysSincePeak > 42) return null;   // peak must be recent
 
-  // Peak must be recent (within last 38 trading days of the window)
-  const daysSincePeak = afterTrough.length - 1 - peakI;
-  if (daysSincePeak > 38) return null;
-
-  // Trend R²
-  const uptrend = afterTrough.slice(0, peakI + 1);
+  const uptrend = after.slice(0, peakI + 1);
   if (uptrend.length < 12) return null;
   const r2 = calcR2(uptrend);
   if (r2 < smoothness) return null;
 
-  // Pullback
-  const recentP  = prices[n - 1];
-  const pullback = (peakP - recentP) / peakP;
-
+  const pullback = (peakP - currentPrice) / peakP;
   let pbScore = 0;
   if (pullbackMode === 'ideal') {
-    if (pullback >= 0.05 && pullback <= 0.25) pbScore = 1.0;
-    else if (pullback < 0.05) pbScore = 0.5;
-    else return null;
+    if (pullback >= 0.05 && pullback <= 0.25)      pbScore = 1.0;
+    else if (pullback < 0.05)                      pbScore = 0.55;
+    else                                           return null;
   } else if (pullbackMode === 'tight') {
-    if (pullback < 0.10) pbScore = 1.0;
-    else pbScore = 0.4;
+    if (pullback < 0.10)  pbScore = 1.0;
+    else                  pbScore = 0.4;
   } else {
-    // any
-    if (pullback > 0.40) pbScore = 0.2;
-    else if (pullback > 0.25) pbScore = 0.6;
-    else pbScore = 1.0;
+    pbScore = pullback > 0.40 ? 0.2 : pullback > 0.25 ? 0.6 : 1.0;
   }
 
-  // Volume trend
-  const half    = Math.floor(volumes.length / 2);
-  const avgV1   = volumes.slice(0, half).reduce((a, b) => a + b, 0) / half;
-  const avgV2   = volumes.slice(half).reduce((a, b) => a + b, 0) / (volumes.length - half);
-  const volScore = avgV2 > avgV1 * 1.05 ? 1.0 : avgV2 > avgV1 * 0.9 ? 0.65 : 0.35;
-
-  const score = Math.round(
-    totalGain * 38 +
-    r2        * 28 +
-    pbScore   * 20 +
-    volScore  * 14
-  );
+  const half   = Math.floor(volumes.length / 2);
+  const avgV1  = volumes.slice(0, half).reduce((a, b) => a + b, 0) / (half || 1);
+  const avgV2  = volumes.slice(half).reduce((a, b) => a + b, 0) / ((volumes.length - half) || 1);
+  const volScore = avgV2 > avgV1 * 1.05 ? 1.0 : avgV2 > avgV1 * 0.88 ? 0.65 : 0.35;
 
   return {
-    score,
-    totalGain,
+    score:       Math.round(gain * 38 + r2 * 28 + pbScore * 20 + volScore * 14),
+    totalGain:   gain,
     r2,
     pullback,
-    currentPrice,
-    peakPrice: peakP,
+    peakPrice:   peakP,
     troughPrice: troughP,
   };
 }
 
-// ─────────────────────────────────────────────
-// SCAN
-// ─────────────────────────────────────────────
+// ═══════════════════════════════════════════════════
+// SCAN ORCHESTRATION
+// ═══════════════════════════════════════════════════
 async function runScan() {
   const btn = document.getElementById('mainBtn');
   btn.disabled = true;
-  btn.textContent = '◌ Scanning...';
+  btn.textContent = '◌ Scanning…';
   allStocks = [];
   researchSet.clear();
   trashSet.clear();
-  setStatus('run', 'Scanning stocks...');
+  updateBadges();
+
+  setStatus('run', 'Testing connection to Yahoo Finance…');
   document.getElementById('track').style.display = 'block';
+  document.getElementById('fill').style.width = '0%';
   document.getElementById('grid').innerHTML = '';
 
   const opts = {
-    minGain:     parseFloat(document.getElementById('fMinGain').value) / 100,
-    minPrice:    parseFloat(document.getElementById('fMinPrice').value),
-    maxPrice:    parseFloat(document.getElementById('fMaxPrice').value),
-    smoothness:  parseFloat(document.getElementById('fSmooth').value),
+    minGain:      parseFloat(document.getElementById('fMinGain').value)  / 100,
+    minPrice:     parseFloat(document.getElementById('fMinPrice').value),
+    maxPrice:     parseFloat(document.getElementById('fMaxPrice').value),
+    smoothness:   parseFloat(document.getElementById('fSmooth').value),
     pullbackMode: document.getElementById('fPullback').value,
   };
 
-  const results = [];
+  // ── Test if Yahoo Finance is reachable (direct or via proxy) ──
+  usingLive = await testYahooConnection();
+  setModeTag(usingLive);
 
-  for (let i = 0; i < STOCK_DB.length; i++) {
-    const entry   = STOCK_DB[i];
-    const pct     = Math.round((i + 1) / STOCK_DB.length * 100);
+  const results   = [];
+  const BATCH     = usingLive ? 4 : 8;   // smaller batches for live to be polite
+  const DELAY     = usingLive ? 350 : 15; // ms between batches
+
+  for (let i = 0; i < TICKER_LIST.length; i += BATCH) {
+    const batch = TICKER_LIST.slice(i, i + BATCH);
+    const pct   = Math.round((i / TICKER_LIST.length) * 100);
     document.getElementById('fill').style.width = pct + '%';
-    setStatus('run', `Scanning ${i + 1} / ${STOCK_DB.length} — ${entry.t}…`);
+    setStatus('run',
+      `${usingLive ? '📡 Live' : '◈ Sim'} · Scanning ${i + 1}–${Math.min(i + BATCH, TICKER_LIST.length)} of ${TICKER_LIST.length} · ${results.length} matches`
+    );
 
-    // Yield to browser so UI updates
-    await new Promise(r => setTimeout(r, 12));
+    await Promise.allSettled(batch.map(async ticker => {
+      try {
+        const raw    = usingLive ? await fetchYahoo(ticker) : simulatePrices(ticker);
+        if (!raw) return;
+        const scored = scoreStock(raw, opts);
+        if (scored) results.push({ ...raw, ...scored });
+      } catch (_) {}
+    }));
 
-    const prices  = generatePrices(entry);
-    const rand    = seededRand(entry.t.charCodeAt(0) * 777);
-    const volumes = generateVolumes(prices, rand);
-    const scored  = scoreStock(prices, volumes, opts);
-
-    if (scored) {
-      results.push({
-        ticker: entry.t,
-        name:   entry.n,
-        sector: entry.s,
-        prices,
-        volumes,
-        ...scored,
-      });
-    }
+    if (DELAY > 50) await sleep(DELAY);
+    else await tick();
   }
 
   results.sort((a, b) => b.score - a.score);
-  allStocks = results;
+  allStocks = results.slice(0, 80);
 
+  document.getElementById('fill').style.width = '100%';
   document.getElementById('track').style.display = 'none';
-  setStatus('done', `Scan complete — ${allStocks.length} stocks matched the 4-month trend pattern.`);
+
+  const modeStr = usingLive ? '📡 LIVE Yahoo Finance data' : '◈ Simulated data (Yahoo blocked)';
+  setStatus('done',
+    `Scan complete · ${allStocks.length} matches found · ${modeStr}`
+  );
 
   btn.disabled = false;
-  btn.textContent = '▶ Scan Market';
-
+  btn.textContent = '▶ Re-Scan';
   updateBadges();
   renderGrid();
 }
 
-// ─────────────────────────────────────────────
+async function testYahooConnection() {
+  const testUrl = 'https://query1.finance.yahoo.com/v8/finance/chart/AAPL?interval=1d&range=5d';
+  for (const url of [testUrl, PROXY + encodeURIComponent(testUrl)]) {
+    try {
+      const res = await fetch(url, { signal: AbortSignal.timeout(6000) });
+      if (res.ok) {
+        const j = await res.json();
+        if (j?.chart?.result?.[0]?.indicators?.quote?.[0]?.close?.length > 0) return true;
+      }
+    } catch (_) {}
+  }
+  return false;
+}
+
+function setModeTag(live) {
+  const el = document.getElementById('modeTag');
+  el.textContent = live ? '● LIVE DATA' : '● SIMULATED';
+  el.className   = 'data-mode ' + (live ? 'live' : 'sim');
+}
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const tick  = ()  => new Promise(r => setTimeout(r, 0));
+
+// ═══════════════════════════════════════════════════
 // RENDER
-// ─────────────────────────────────────────────
+// ═══════════════════════════════════════════════════
 function setTab(tab) {
   activeTab = tab;
-  ['all','research','trash'].forEach(t => {
-    document.getElementById('tab-' + t).classList.toggle('on', t === tab);
-  });
+  ['all','research','trash'].forEach(t =>
+    document.getElementById('tab-' + t).classList.toggle('on', t === tab)
+  );
   renderGrid();
 }
 
@@ -627,20 +597,19 @@ function updateBadges() {
 
 function renderGrid() {
   const grid = document.getElementById('grid');
-
-  let list = allStocks;
+  let list   = allStocks;
   if (activeTab === 'research') list = allStocks.filter(s => researchSet.has(s.ticker));
   if (activeTab === 'trash')    list = allStocks.filter(s => trashSet.has(s.ticker));
 
-  if (list.length === 0) {
-    const empty = {
+  if (!list.length) {
+    const msgs = {
       all:      allStocks.length === 0
-                  ? 'Press <strong>Scan Market</strong> to find momentum stocks.'
-                  : 'No stocks matched current filters — try loosening the settings.',
-      research: 'No stocks in your research pile yet.<br>Click <strong>★ Research</strong> on any card.',
-      trash:    'No stocks discarded yet.<br>Click <strong>✕ Discard</strong> on any card.',
+                  ? 'Press <strong>Scan Market</strong> to begin scanning.'
+                  : 'No stocks matched current filters — try loosening settings.',
+      research: 'No stocks in research pile yet.<br>Click <strong>★ Research</strong> on any card.',
+      trash:    'No discards yet.<br>Click <strong>✕ Discard</strong> on any card.',
     };
-    grid.innerHTML = `<div class="empty"><span class="icon">${activeTab === 'all' ? '◈' : activeTab === 'research' ? '★' : '✕'}</span>${empty[activeTab]}</div>`;
+    grid.innerHTML = `<div class="empty"><span class="icon">${{all:'◈',research:'★',trash:'✕'}[activeTab]}</span>${msgs[activeTab]}</div>`;
     renderResearchPanel();
     return;
   }
@@ -650,86 +619,66 @@ function renderGrid() {
 }
 
 function cardHTML(s, idx) {
-  const isStar = researchSet.has(s.ticker);
-  const isDead = trashSet.has(s.ticker);
-
+  const isStar   = researchSet.has(s.ticker);
+  const isDead   = trashSet.has(s.ticker);
   const gain4m   = (s.totalGain * 100).toFixed(0);
   const peakRun  = ((s.peakPrice - s.troughPrice) / s.troughPrice * 100).toFixed(0);
   const pullPct  = (s.pullback * 100).toFixed(1);
   const r2pct    = (s.r2 * 100).toFixed(0);
-  const spark    = sparklineSVG(s.prices);
+  const liveTag  = s.live
+    ? `<span style="font-size:8px;font-family:monospace;color:var(--accent);margin-left:6px;opacity:0.7">LIVE</span>`
+    : `<span style="font-size:8px;font-family:monospace;color:var(--yellow);margin-left:6px;opacity:0.7">SIM</span>`;
 
-  return `<div class="card${isStar ? ' star' : ''}${isDead ? ' dead' : ''}" id="c-${s.ticker}" style="animation-delay:${idx * 0.035}s">
+  return `<div class="card${isStar?' star':''}${isDead?' dead':''}" id="c-${s.ticker}" style="animation-delay:${idx*0.03}s">
     <div class="card-top">
       <div>
-        <div class="ticker">${s.ticker}</div>
-        <div class="co-name">${s.name} · ${s.sector}</div>
+        <div class="ticker">${s.ticker}${liveTag}</div>
+        <div class="co-name">${s.name || s.ticker}</div>
       </div>
       <div class="score-chip">${s.score}</div>
     </div>
-    <div class="spark">${spark}</div>
+    <div class="spark">${sparkSVG(s.prices)}</div>
     <div class="stats">
-      <div class="stat"><div class="stat-lbl">4M Gain</div><div class="stat-val g">+${gain4m}%</div></div>
-      <div class="stat"><div class="stat-lbl">Peak Run</div><div class="stat-val g">+${peakRun}%</div></div>
-      <div class="stat"><div class="stat-lbl">Pullback</div><div class="stat-val ${parseFloat(pullPct) > 20 ? 'r' : 'g'}">${pullPct}%</div></div>
+      <div class="stat"><div class="stat-lbl">4M Gain</div>  <div class="stat-val g">+${gain4m}%</div></div>
+      <div class="stat"><div class="stat-lbl">Peak Run</div> <div class="stat-val g">+${peakRun}%</div></div>
+      <div class="stat"><div class="stat-lbl">Pullback</div> <div class="stat-val ${parseFloat(pullPct)>20?'r':'g'}">${pullPct}%</div></div>
       <div class="stat"><div class="stat-lbl">Smoothness</div><div class="stat-val">${r2pct}%</div></div>
-      <div class="stat"><div class="stat-lbl">Price</div><div class="stat-val">$${s.currentPrice.toFixed(2)}</div></div>
-      <div class="stat"><div class="stat-lbl">Score</div><div class="stat-val g">${s.score}</div></div>
+      <div class="stat"><div class="stat-lbl">Price</div>    <div class="stat-val">$${s.currentPrice.toFixed(2)}</div></div>
+      <div class="stat"><div class="stat-lbl">Score</div>    <div class="stat-val g">${s.score}</div></div>
     </div>
     <div class="card-acts">
-      <button class="act research${isStar ? ' on' : ''}" onclick="toggle('${s.ticker}','research')">${isStar ? '★ In Research' : '★ Research'}</button>
-      <button class="act trash${isDead ? ' on' : ''}"    onclick="toggle('${s.ticker}','trash')"   >${isDead ? '✕ Discarded'  : '✕ Discard'  }</button>
+      <button class="act research${isStar?' on':''}" onclick="toggle('${s.ticker}','research')">${isStar?'★ In Research':'★ Research'}</button>
+      <button class="act trash${isDead?' on':''}"    onclick="toggle('${s.ticker}','trash')">${isDead?'✕ Discarded':'✕ Discard'}</button>
     </div>
   </div>`;
 }
 
-function sparklineSVG(prices) {
+function sparkSVG(prices) {
   const W = 280, H = 56;
-  const min = Math.min(...prices);
-  const max = Math.max(...prices);
+  const min = Math.min(...prices), max = Math.max(...prices);
   const rng = max - min || 1;
-
   const pts = prices.map((p, i) => [
-    ((i / (prices.length - 1)) * W).toFixed(2),
-    (H - ((p - min) / rng) * (H - 6) - 3).toFixed(2)
+    ((i / (prices.length - 1)) * W).toFixed(1),
+    (H - ((p - min) / rng) * (H - 6) - 3).toFixed(1)
   ]);
-
   const line = 'M' + pts.map(p => p.join(',')).join('L');
   const area = line + `L${W},${H}L0,${H}Z`;
-
-  // Color the uptrend portion green, pullback lighter
-  const peakI = prices.indexOf(Math.max(...prices));
-  const peakX = ((peakI / (prices.length - 1)) * W).toFixed(2);
-
   return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
-    <defs>
-      <linearGradient id="sg-${Math.random().toString(36).slice(2,6)}" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#00ff88" stop-opacity="0.22"/>
-        <stop offset="100%" stop-color="#00ff88" stop-opacity="0"/>
-      </linearGradient>
-    </defs>
-    <path d="${area}" fill="#00ff8818"/>
-    <path d="${line}" fill="none" stroke="#00ff88" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="${area}" fill="#00ff8814"/>
+    <path d="${line}" fill="none" stroke="#00ff88" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
   </svg>`;
 }
 
 function toggle(ticker, action) {
   const main  = action === 'research' ? researchSet : trashSet;
-  const other = action === 'research' ? trashSet : researchSet;
-
+  const other = action === 'research' ? trashSet    : researchSet;
   if (main.has(ticker)) main.delete(ticker);
   else { main.add(ticker); other.delete(ticker); }
-
   updateBadges();
-
   if (activeTab === 'all') {
-    // Re-render just this card in place
     const stock = allStocks.find(s => s.ticker === ticker);
     const el    = document.getElementById('c-' + ticker);
-    if (stock && el) {
-      const idx = Array.from(el.parentNode.children).indexOf(el);
-      el.outerHTML = cardHTML(stock, 0);
-    }
+    if (stock && el) el.outerHTML = cardHTML(stock, 0);
     renderResearchPanel();
   } else {
     renderGrid();
@@ -739,9 +688,7 @@ function toggle(ticker, action) {
 function renderResearchPanel() {
   const panel = document.getElementById('rpanel');
   const pills = document.getElementById('pillbox');
-
-  if (researchSet.size === 0) { panel.classList.remove('on'); return; }
-
+  if (!researchSet.size) { panel.classList.remove('on'); return; }
   panel.classList.add('on');
   pills.innerHTML = [...researchSet].map(ticker => {
     const s = allStocks.find(x => x.ticker === ticker);
@@ -755,8 +702,8 @@ function setStatus(state, msg) {
   document.getElementById('statusMsg').innerHTML = msg;
 }
 
-// Auto-run on load
-window.addEventListener('load', () => setTimeout(runScan, 300));
+// ── Kick off on load ──
+window.addEventListener('load', () => setTimeout(runScan, 400));
 </script>
 </body>
 </html>
